@@ -1,14 +1,27 @@
 import React from 'react';
-import {ACTIONS} from './App';
 
-function Todo({todo,dispatch}){
-  return(
+const ACTIONS = {
+  REMOVE: 'remove',
+  TOGGLE: 'toggle',
+};
+
+function Todo ({todo, onToggle, onRemove}) {
+
+  const onClickTodo = (type) => {
+    if(type === ACTIONS.TOGGLE) {
+      onToggle(todo.id)
+    } else {
+      onRemove(todo.id);
+    }
+  };
+
+  return (
     <div>
-      <span style={{color : todo.completed ? '#aaa' : '#000'}}>{todo.name}</span>
-      <button onClick={() => dispatch({type : ACTIONS.TOGGLE,payload : {id : todo.id}})}>Toggle</button>
-      <button onClick={() => dispatch({type : ACTIONS.DELETE ,payload : {id : todo.id}})}>Delete</button>
+      <span style={{color: todo.completed ? '#aaa' : '#000'}}>{todo.name}</span>
+      <button onClick={() => onClickTodo(ACTIONS.TOGGLE)}>Toggle</button>
+      <button onClick={() => onClickTodo(ACTIONS.REMOVE)}>Delete</button>
     </div>
-  )
+  );
 }
 
 export default Todo;
